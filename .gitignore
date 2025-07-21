@@ -1,0 +1,31 @@
+# Игнорируем конфиги с API-ключами
+.aider.conf.yml
+.aider.model.settings.yml
+
+# Временные файлы и кэш
+.aider/
+.cache/
+*.tmp
+*.bak
+*.swp
+
+# Файлы редакторов (VS Code, PyCharm и др.)
+.vscode/
+.idea/
+*.code-workspace
+
+# Питоновские временные файлы
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Логи и дампы
+*.log
+*.dump
+*.sqlite
+
+# Файлы данных (если не нужны в репозитории)
+*.csv
+*.json
+*.xlsx
+*.db
