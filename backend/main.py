@@ -2,10 +2,9 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from db.session import Base, engine, get_session
-from models.item import ItemCreate, ItemUpdate, ItemOut
-import crud
-
+from backend.db.session import Base, engine, get_session
+from backend.models.item import ItemCreate, ItemUpdate, ItemOut
+import backend.crud as crud
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
@@ -13,10 +12,15 @@ async def lifespan(_: FastAPI):
         await conn.run_sync(Base.metadata.create_all)
     yield
 
+"""
+uvicorn backend.main:app --reload --host 127.0.0.1 --port 8001
+"""
 app = FastAPI(
     title="Async FastAPI + SQLAlchemy",
     version="1.0.0",
-    lifespan=lifespan
+    lifespan=lifespan,
+    host="0.0.0.0",
+    port=8000
 )
 
 @app.get("/")

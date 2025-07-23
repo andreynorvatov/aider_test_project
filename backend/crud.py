@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, delete
 from typing import List, Optional
-from models.item import ItemCreate, ItemUpdate, ItemOut, Item
+from backend.models.item import ItemCreate, ItemUpdate, ItemOut, Item
 
 async def create_item(session: AsyncSession, item: ItemCreate) -> ItemOut:
     new_item = Item(**item.dict())
