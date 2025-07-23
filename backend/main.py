@@ -1,6 +1,7 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi.middleware.cors import CORSMiddleware
 
 from backend.db.session import Base, engine, get_session
 from backend.models.item import ItemCreate, ItemUpdate, ItemOut
@@ -21,6 +22,14 @@ app = FastAPI(
     lifespan=lifespan,
     host="0.0.0.0",
     port=8000
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 @app.get("/")
