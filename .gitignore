@@ -5,25 +5,39 @@
 *.bak
 *.swp
 
-# Файлы редакторов (VS Code, PyCharm и др.)
+# Файлы редакторов
 .vscode/
 .idea/
 *.code-workspace
 
-# Питоновские временные файлы
+# Питоновские файлы
 __pycache__/
 *.py[cod]
 *$py.class
+.pytest_cache/
+.mypy_cache/
 
-# Логи и дампы
+# Логи и БД
 *.log
 *.dump
 *.sqlite
+backend/*.db  # Игнорируем файлы БД в папке backend
 
-# Файлы данных (если не нужны в репозитории)
+# Файлы данных
 *.csv
 *.json
 *.xlsx
 *.db
-.aider*
+
+# Окружение
 .env
+.venv/
+env/
+venv/
+ENV/
+
+# Прочее
+*.egg-info/
+dist/
+build/
+.aider*
