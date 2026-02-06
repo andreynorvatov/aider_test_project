@@ -13,7 +13,7 @@ def update_testname_in_xml(xml_file_path, output_file_path):
     for element in http_sampler_proxies:
         # Extract the current testname value
         testname = element.get('testname')
-        
+
         # Split the testname string to modify only the numeric part
         parts = testname.split('/')
         if len(parts) > 2:
@@ -34,6 +34,6 @@ def update_testname_in_xml(xml_file_path, output_file_path):
 
 # Example usage
 if __name__ == '__main__':
-    xml_file_path = 'data/UC07_Служеная_записка_web.jmx'
+    xml_file_path = 'data/UC07_Служебная_записка_web.jmx'
     output_file_path = 'data/UC07_Служеная_записка_web_updated.jmx'
     update_testname_in_xml(xml_file_path, output_file_path)
