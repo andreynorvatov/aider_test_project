@@ -40,7 +40,7 @@ def update_testname_in_xml(xml_file_path, output_file_path):
 
 # Example usage
 if __name__ == '__main__':
-    json_data = read_json_file('path/to/your/file.json')
+    json_data = read_json_file('path/to/your/file.json')  # Replace with the actual path to your JSON file
     xml_file_path = 'data/UC07_Служеная_записка_web.jmx'
     output_file_path = 'data/UC07_Служеная_записка_web_updated.jmx'
     update_testname_in_xml(xml_file_path, output_file_path)
