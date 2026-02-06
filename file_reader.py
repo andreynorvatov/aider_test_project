@@ -11,6 +11,6 @@ def transcribe_audio(audio_path):
 
 if __name__ == "__main__":
     import sys
-    audio_path = sys.argv[1]
+    audio_path = "data/2026-02-06 15.51.05.ogg"
     transcription = transcribe_audio(audio_path)
     print(transcription)
