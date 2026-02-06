@@ -5,7 +5,7 @@ def update_testname_in_xml(xml_file_path, output_file_path):
     root = tree.getroot()
 
     # Find all elements with class="HTTPSamplerProxy"
-    http_sampler_proxies = root.findall(".//element[@class='HTTPSamplerProxy']")
+    http_sampler_proxies = root.findall(".//element[@testclass='HTTPSamplerProxy']")
 
     # Initialize a counter for sequential numbering
     counter = 1
@@ -23,7 +23,7 @@ def update_testname_in_xml(xml_file_path, output_file_path):
             parts[0] = new_numeric_part
             new_testname = '/'.join(parts)
             
-            # Update the testname attribute in the XML element
+            # Update the testname attribute in XML Element element
             element.set('testname', new_testname)
         
         # Increment the counter for the next sequential number
@@ -34,6 +34,6 @@ def update_testname_in_xml(xml_file_path, output_file_path):
 
 # Example usage
 if __name__ == '__main__':
-    xml_file_path = 'data/UC07_Служебная_записка_web.jmx'
-    output_file_path = 'data/UC07_Служеная_записка_web_updated.jmx'
+    xml_file_path = 'path/to/UC07_Служебная_записка_web.jmx'
+    output_file_path = 'path/to/UC07_Служебная_записка_web_updated.jmx'
     update_testname_in_xml(xml_file_path, output_file_path)
