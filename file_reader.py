@@ -2,7 +2,7 @@ import whisper
 
 def transcribe_audio(audio_path):
     # Load the Whisper model from a specific local directory
-    model = whisper.load_model("turbo", model_dir="/Users/andrey_norvatov/.lmstudio/models/mlx-community/whisper-large-v3-turbo")
+    model = whisper.load_model("base", "/Users/andrey_norvatov/.lmstudio/models/mlx-community/whisper-large-v3-turbo")
 
     # Transcribe the audio file
     result = model.transcribe(audio_path)
