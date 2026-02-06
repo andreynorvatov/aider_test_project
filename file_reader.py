@@ -6,7 +6,7 @@ def read_json_file(file_path):
         data = json.load(file)
     return data
 
-def update_testname_in_xml(xml_file_path):
+def update_testname_in_xml(xml_file_path, output_file_path):
     tree = ET.parse(xml_file_path)
     root = tree.getroot()
 
@@ -35,11 +35,12 @@ def update_testname_in_xml(xml_file_path):
         # Increment the counter for the next sequential number
         counter += 1
 
-    # Write the updated XML back to the file
-    tree.write(xml_file_path)
+    # Write the updated XML to a new file
+    tree.write(output_file_path)
 
 # Example usage
 if __name__ == '__main__':
     json_data = read_json_file('path/to/your/file.json')
     xml_file_path = 'data/UC07_Служеная_записка_web.jmx'
-    update_testname_in_xml(xml_file_path)
+    output_file_path = 'data/UC07_Служеная_записка_web_updated.jmx'
+    update_testname_in_xml(xml_file_path, output_file_path)
