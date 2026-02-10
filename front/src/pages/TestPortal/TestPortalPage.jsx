@@ -43,6 +43,15 @@ export function TestPortalPage() {
     setSelectedTestId(null);
   };
 
+  // Обработчик сохранения изменений теста
+  const handleSaveTest = (updatedTest) => {
+    setTests(prevTests => 
+      prevTests.map(test => 
+        test.id === updatedTest.id ? updatedTest : test
+      )
+    );
+  };
+
   // Обработчик обновления списка
   const handleRefresh = () => {
     // В реальном приложении здесь был бы API-запрос
@@ -145,6 +154,7 @@ export function TestPortalPage() {
           <TestDetailsDrawer
             test={selectedTest}
             onClose={handleCloseDrawer}
+            onSave={handleSaveTest}
           />
         )}
       </div>
