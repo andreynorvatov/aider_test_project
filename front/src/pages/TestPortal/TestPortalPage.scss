@@ -90,7 +90,7 @@
   
   &__pagination {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     gap: $spacing-md;
     margin-top: $spacing-lg;
@@ -199,6 +199,47 @@
   color: $color-gray-600;
 }
 
+// Выбор количества элементов на странице
+.pagination-size {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  
+  &__label {
+    font-size: 0.875rem;
+    color: $color-gray-600;
+    white-space: nowrap;
+  }
+  
+  &__select {
+    padding: $spacing-xs $spacing-sm;
+    font-size: 0.875rem;
+    border: 1px solid $color-gray-300;
+    border-radius: $border-radius;
+    background-color: $color-white;
+    color: $color-gray-700;
+    cursor: pointer;
+    transition: $transition-fast;
+    
+    &:focus {
+      outline: none;
+      border-color: $color-primary;
+      box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
+    }
+    
+    &:hover {
+      border-color: $color-gray-400;
+    }
+  }
+}
+
+// Контейнер для кнопок пагинации
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
 // Анимации
 @keyframes fadeIn {
   from {
@@ -226,5 +267,20 @@
     &__search {
       max-width: none;
     }
+    
+    &__pagination {
+      flex-direction: column;
+      gap: $spacing-sm;
+    }
+  }
+  
+  .pagination-size {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .pagination-controls {
+    width: 100%;
+    justify-content: center;
   }
 }

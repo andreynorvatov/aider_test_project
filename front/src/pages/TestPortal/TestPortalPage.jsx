@@ -4,13 +4,15 @@ import { TestDetailsDrawer } from '../../components/features/TestDetailsDrawer/T
 import { mockTests } from '../../data/mockTests';
 import './TestPortalPage.scss';
 
-const ITEMS_PER_PAGE = 10;
+const PAGE_SIZE_OPTIONS = [10, 25, 50, 100];
+const DEFAULT_PAGE_SIZE = 10;
 
 export function TestPortalPage() {
   const [tests, setTests] = useState(mockTests);
   const [selectedTestId, setSelectedTestId] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(DEFAULT_PAGE_SIZE);
 
   // Фильтрация тестов по поисковому запросу
   const filteredTests = useMemo(() => {
@@ -22,11 +24,17 @@ export function TestPortalPage() {
   }, [tests, searchQuery]);
 
   // Пагинация
-  const totalPages = Math.ceil(filteredTests.length / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(filteredTests.length / itemsPerPage);
   const paginatedTests = useMemo(() => {
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    return filteredTests.slice(startIndex, startIndex + ITEMS_PER_PAGE);
-  }, [filteredTests, currentPage]);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    return filteredTests.slice(startIndex, startIndex + itemsPerPage);
+  }, [filteredTests, currentPage, itemsPerPage]);
+
+  // Обработчик изменения количества элементов на странице
+  const handleItemsPerPageChange = (e) => {
+    setItemsPerPage(Number(e.target.value));
+    setCurrentPage(1);
+  };
 
   // Выбранный тест для отображения в боковом меню
   const selectedTest = useMemo(() => {
@@ -123,29 +131,49 @@ export function TestPortalPage() {
 
           {totalPages > 1 && (
             <div className="test-portal__pagination">
-              <button
-                className="pagination-btn"
-                disabled={currentPage === 1}
-                onClick={() => setCurrentPage(prev => prev - 1)}
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <polyline points="15 18 9 12 15 6"></polyline>
-                </svg>
-              </button>
+              <div className="pagination-size">
+                <label className="pagination-size__label" htmlFor="items-per-page">
+                  Элементов на странице:
+                </label>
+                <select
+                  id="items-per-page"
+                  className="pagination-size__select"
+                  value={itemsPerPage}
+                  onChange={handleItemsPerPageChange}
+                >
+                  {PAGE_SIZE_OPTIONS.map(option => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </div>
               
-              <span className="pagination-info">
-                Страница {currentPage} из {totalPages}
-              </span>
-              
-              <button
-                className="pagination-btn"
-                disabled={currentPage === totalPages}
-                onClick={() => setCurrentPage(prev => prev + 1)}
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-              </button>
+              <div className="pagination-controls">
+                <button
+                  className="pagination-btn"
+                  disabled={currentPage === 1}
+                  onClick={() => setCurrentPage(prev => prev - 1)}
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                  </svg>
+                </button>
+                
+                <span className="pagination-info">
+                  Страница {currentPage} из {totalPages}
+                </span>
+                
+                <button
+                  className="pagination-btn"
+                  disabled={currentPage === totalPages}
+                  onClick={() => setCurrentPage(prev => prev + 1)}
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </button>
+              </div>
             </div>
           )}
         </div>
