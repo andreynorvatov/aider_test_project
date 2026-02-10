@@ -1,67 +1,37 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '../../ui/Button';
+import { StatusBadge } from '../../ui/StatusBadge';
+import { Input } from '../../ui/Input';
+import { Select } from '../../ui/Select';
+import { Textarea } from '../../ui/Textarea';
+import { formatDateTime, toDateTimeLocal } from '../../../utils/dateUtils';
+import { STATUS_OPTIONS } from '../../../utils/statusUtils';
 import './TestDetailsDrawer.scss';
 
-/**
- * Форматирование даты и времени в формат ДД.ММ.ГГГГ ЧЧ:ММ
- * @param {string|null} dateString - ISO строка даты
- * @returns {string} - Отформатированная дата или "—"
- */
-const formatDateTime = (dateString) => {
-  if (!dateString) return '—';
-  
-  const date = new Date(dateString);
-  const day = String(date.getDate()).padStart(2, '0');
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const year = date.getFullYear();
-  const hours = String(date.getHours()).padStart(2, '0');
-  const minutes = String(date.getMinutes()).padStart(2, '0');
-  
-  return `${day}.${month}.${year} ${hours}:${minutes}`;
-};
+// Иконки
+const ExpandIcon = () => (
+  <>
+    <polyline points="15 3 21 3 21 9"></polyline>
+    <polyline points="9 21 3 21 3 15"></polyline>
+    <line x1="21" y1="3" x2="14" y2="10"></line>
+    <line x1="3" y1="21" x2="10" y2="14"></line>
+  </>
+);
 
-/**
- * Преобразование ISO даты в формат для input datetime-local
- * @param {string|null} dateString - ISO строка даты
- * @returns {string} - Дата в формате YYYY-MM-DDTHH:MM
- */
-const toDateTimeLocal = (dateString) => {
-  if (!dateString) return '';
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  const hours = String(date.getHours()).padStart(2, '0');
-  const minutes = String(date.getMinutes()).padStart(2, '0');
-  return `${year}-${month}-${day}T${hours}:${minutes}`;
-};
+const CloseIcon = () => (
+  <>
+    <line x1="18" y1="6" x2="6" y2="18"></line>
+    <line x1="6" y1="6" x2="18" y2="18"></line>
+  </>
+);
 
-/**
- * Получение CSS-класса для статуса
- * @param {string} status - Статус теста
- * @returns {string} - CSS-класс
- */
-const getStatusClass = (status) => {
-  const statusClasses = {
-    'Черновик': 'status-badge--draft',
-    'Запланирован': 'status-badge--planned',
-    'В процессе': 'status-badge--in-progress',
-    'Успешно': 'status-badge--success',
-    'Завершен с ошибками': 'status-badge--error',
-    'Отменен': 'status-badge--canceled',
-  };
-  return statusClasses[status] || 'status-badge--default';
-};
-
-// Список доступных статусов
-const STATUS_OPTIONS = [
-  'Черновик',
-  'Запланирован',
-  'В процессе',
-  'Успешно',
-  'Завершен с ошибками',
-  'Отменен',
-];
+const EditIcon = () => (
+  <>
+    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+  </>
+);
 
 export function TestDetailsDrawer({ test, onClose, onSave }) {
   const navigate = useNavigate();
@@ -107,14 +77,8 @@ export function TestDetailsDrawer({ test, onClose, onSave }) {
     }));
   };
 
-  // Вход в режим редактирования
-  const handleEditClick = () => {
-    setIsEditing(true);
-  };
-
   // Отмена редактирования
   const handleCancelClick = () => {
-    // Сбрасываем форму к исходным данным
     setFormData({
       name: test.name,
       status: test.status,
@@ -157,6 +121,9 @@ export function TestDetailsDrawer({ test, onClose, onSave }) {
     navigate(`/tests/${test.id}`);
   };
 
+  // Преобразование статусов в формат options
+  const statusOptions = STATUS_OPTIONS.map(status => ({ value: status, label: status }));
+
   return (
     <div className="test-drawer">
       <div className="test-drawer__header">
@@ -171,16 +138,12 @@ export function TestDetailsDrawer({ test, onClose, onSave }) {
             title="Открыть на всю страницу"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <polyline points="15 3 21 3 21 9"></polyline>
-              <polyline points="9 21 3 21 3 15"></polyline>
-              <line x1="21" y1="3" x2="14" y2="10"></line>
-              <line x1="3" y1="21" x2="10" y2="14"></line>
+              <ExpandIcon />
             </svg>
           </button>
           <button className="test-drawer__close" onClick={onClose} aria-label="Закрыть">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
+              <CloseIcon />
             </svg>
           </button>
         </div>
@@ -193,56 +156,40 @@ export function TestDetailsDrawer({ test, onClose, onSave }) {
           
           {isEditing ? (
             <>
-              <div className="test-drawer__field">
-                <label className="test-drawer__label" htmlFor="name">Наименование:</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  className="test-drawer__input"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                />
-              </div>
+              <Input
+                id="name"
+                name="name"
+                label="Наименование:"
+                value={formData.name}
+                onChange={handleInputChange}
+              />
               
-              <div className="test-drawer__field">
-                <label className="test-drawer__label" htmlFor="status">Статус:</label>
-                <select
-                  id="status"
-                  name="status"
-                  className="test-drawer__select"
-                  value={formData.status}
-                  onChange={handleInputChange}
-                >
-                  {STATUS_OPTIONS.map(status => (
-                    <option key={status} value={status}>{status}</option>
-                  ))}
-                </select>
-              </div>
+              <Select
+                id="status"
+                name="status"
+                label="Статус:"
+                value={formData.status}
+                onChange={handleInputChange}
+                options={statusOptions}
+              />
               
-              <div className="test-drawer__field">
-                <label className="test-drawer__label" htmlFor="startTime">Время запуска:</label>
-                <input
-                  type="datetime-local"
-                  id="startTime"
-                  name="startTime"
-                  className="test-drawer__input"
-                  value={toDateTimeLocal(formData.startTime)}
-                  onChange={handleInputChange}
-                />
-              </div>
+              <Input
+                type="datetime-local"
+                id="startTime"
+                name="startTime"
+                label="Время запуска:"
+                value={toDateTimeLocal(formData.startTime)}
+                onChange={handleInputChange}
+              />
               
-              <div className="test-drawer__field">
-                <label className="test-drawer__label" htmlFor="endTime">Время завершения:</label>
-                <input
-                  type="datetime-local"
-                  id="endTime"
-                  name="endTime"
-                  className="test-drawer__input"
-                  value={toDateTimeLocal(formData.endTime)}
-                  onChange={handleInputChange}
-                />
-              </div>
+              <Input
+                type="datetime-local"
+                id="endTime"
+                name="endTime"
+                label="Время завершения:"
+                value={toDateTimeLocal(formData.endTime)}
+                onChange={handleInputChange}
+              />
             </>
           ) : (
             <>
@@ -252,9 +199,7 @@ export function TestDetailsDrawer({ test, onClose, onSave }) {
               </div>
               <div className="test-drawer__field">
                 <span className="test-drawer__label">Статус:</span>
-                <span className={`status-badge ${getStatusClass(test.status)}`}>
-                  {test.status}
-                </span>
+                <StatusBadge status={test.status} />
               </div>
               <div className="test-drawer__field">
                 <span className="test-drawer__label">Время запуска:</span>
@@ -273,17 +218,13 @@ export function TestDetailsDrawer({ test, onClose, onSave }) {
           <h3 className="test-drawer__section-title">Инициатор</h3>
           
           {isEditing ? (
-            <div className="test-drawer__field">
-              <label className="test-drawer__label" htmlFor="initiator">Кто запустил:</label>
-              <input
-                type="text"
-                id="initiator"
-                name="initiator"
-                className="test-drawer__input"
-                value={formData.initiator}
-                onChange={handleInputChange}
-              />
-            </div>
+            <Input
+              id="initiator"
+              name="initiator"
+              label="Кто запустил:"
+              value={formData.initiator}
+              onChange={handleInputChange}
+            />
           ) : (
             <div className="test-drawer__field">
               <span className="test-drawer__label">Кто запустил:</span>
@@ -298,56 +239,40 @@ export function TestDetailsDrawer({ test, onClose, onSave }) {
           
           {isEditing ? (
             <div className="test-drawer__params">
-              <div className="test-drawer__param">
-                <label className="test-drawer__param-label" htmlFor="virtualUsers">
-                  Число виртуальных пользователей:
-                </label>
-                <input
-                  type="number"
-                  id="virtualUsers"
-                  name="virtualUsers"
-                  className="test-drawer__param-input"
-                  value={formData.virtualUsers}
-                  onChange={handleNumberChange}
-                  min="1"
-                />
-              </div>
-              <div className="test-drawer__param">
-                <label className="test-drawer__param-label" htmlFor="duration">Продолжительность:</label>
-                <input
-                  type="text"
-                  id="duration"
-                  name="duration"
-                  className="test-drawer__param-input"
-                  value={formData.duration}
-                  onChange={handleInputChange}
-                  placeholder="например: 1 час"
-                />
-              </div>
-              <div className="test-drawer__param">
-                <label className="test-drawer__param-label" htmlFor="rps">RPS (запросов в секунду):</label>
-                <input
-                  type="number"
-                  id="rps"
-                  name="rps"
-                  className="test-drawer__param-input"
-                  value={formData.rps}
-                  onChange={handleNumberChange}
-                  min="1"
-                />
-              </div>
-              <div className="test-drawer__param">
-                <label className="test-drawer__param-label" htmlFor="rampUp">Ramp-up время:</label>
-                <input
-                  type="text"
-                  id="rampUp"
-                  name="rampUp"
-                  className="test-drawer__param-input"
-                  value={formData.rampUp}
-                  onChange={handleInputChange}
-                  placeholder="например: 5 минут"
-                />
-              </div>
+              <Input
+                type="number"
+                id="virtualUsers"
+                name="virtualUsers"
+                label="Число виртуальных пользователей:"
+                value={formData.virtualUsers}
+                onChange={handleNumberChange}
+                min="1"
+              />
+              <Input
+                id="duration"
+                name="duration"
+                label="Продолжительность:"
+                value={formData.duration}
+                onChange={handleInputChange}
+                placeholder="например: 1 час"
+              />
+              <Input
+                type="number"
+                id="rps"
+                name="rps"
+                label="RPS (запросов в секунду):"
+                value={formData.rps}
+                onChange={handleNumberChange}
+                min="1"
+              />
+              <Input
+                id="rampUp"
+                name="rampUp"
+                label="Ramp-up время:"
+                value={formData.rampUp}
+                onChange={handleInputChange}
+                placeholder="например: 5 минут"
+              />
             </div>
           ) : (
             <div className="test-drawer__params">
@@ -378,10 +303,9 @@ export function TestDetailsDrawer({ test, onClose, onSave }) {
           <h3 className="test-drawer__section-title">Детальное описание</h3>
           
           {isEditing ? (
-            <textarea
+            <Textarea
               id="description"
               name="description"
-              className="test-drawer__textarea"
               value={formData.description}
               onChange={handleInputChange}
               rows={8}
@@ -398,25 +322,21 @@ export function TestDetailsDrawer({ test, onClose, onSave }) {
       <div className="test-drawer__footer">
         {isEditing ? (
           <div className="test-drawer__edit-actions">
-            <button className="btn btn--secondary" onClick={handleCancelClick}>
+            <Button variant="secondary" onClick={handleCancelClick}>
               Отмена
-            </button>
-            <button className="btn btn--primary" onClick={handleSaveClick}>
+            </Button>
+            <Button variant="primary" onClick={handleSaveClick}>
               Сохранить
-            </button>
+            </Button>
           </div>
         ) : (
           <>
-            <button className="btn btn--primary test-drawer__edit-btn" onClick={handleEditClick}>
-              <svg className="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-              </svg>
+            <Button variant="primary" icon={<EditIcon />} onClick={() => setIsEditing(true)}>
               Редактировать
-            </button>
-            <button className="btn btn--secondary test-drawer__close-btn" onClick={onClose}>
+            </Button>
+            <Button variant="secondary" onClick={onClose}>
               Закрыть
-            </button>
+            </Button>
           </>
         )}
       </div>

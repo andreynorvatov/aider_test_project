@@ -1,11 +1,30 @@
 import { useState, useMemo } from 'react';
 import { TestsTable } from '../../components/features/TestsTable/TestsTable';
 import { TestDetailsDrawer } from '../../components/features/TestDetailsDrawer/TestDetailsDrawer';
+import { Button } from '../../components/ui/Button';
+import { SearchInput } from '../../components/ui/SearchInput';
+import { Pagination } from '../../components/ui/Pagination';
 import { mockTests } from '../../data/mockTests';
 import './TestPortalPage.scss';
 
 const PAGE_SIZE_OPTIONS = [10, 25, 50, 100];
 const DEFAULT_PAGE_SIZE = 10;
+
+// Иконки
+const PlusIcon = () => (
+  <>
+    <line x1="12" y1="5" x2="12" y2="19"></line>
+    <line x1="5" y1="12" x2="19" y2="12"></line>
+  </>
+);
+
+const RefreshIcon = () => (
+  <>
+    <polyline points="23 4 23 10 17 10"></polyline>
+    <polyline points="1 20 1 14 7 14"></polyline>
+    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+  </>
+);
 
 export function TestPortalPage() {
   const [tests, setTests] = useState(mockTests);
@@ -31,8 +50,8 @@ export function TestPortalPage() {
   }, [filteredTests, currentPage, itemsPerPage]);
 
   // Обработчик изменения количества элементов на странице
-  const handleItemsPerPageChange = (e) => {
-    setItemsPerPage(Number(e.target.value));
+  const handleItemsPerPageChange = (newItemsPerPage) => {
+    setItemsPerPage(newItemsPerPage);
     setCurrentPage(1);
   };
 
@@ -89,36 +108,19 @@ export function TestPortalPage() {
 
       <div className="test-portal__toolbar">
         <div className="test-portal__actions">
-          <button className="btn btn--primary" onClick={handleCreateTest}>
-            <svg className="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
+          <Button variant="primary" icon={<PlusIcon />} onClick={handleCreateTest}>
             Создать новый тест
-          </button>
-          <button className="btn btn--secondary" onClick={handleRefresh}>
-            <svg className="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <polyline points="23 4 23 10 17 10"></polyline>
-              <polyline points="1 20 1 14 7 14"></polyline>
-              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
-            </svg>
+          </Button>
+          <Button variant="secondary" icon={<RefreshIcon />} onClick={handleRefresh}>
             Обновить список
-          </button>
+          </Button>
         </div>
 
-        <div className="test-portal__search">
-          <svg className="test-portal__search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-          <input
-            type="text"
-            className="test-portal__search-input"
-            placeholder="Поиск по наименованию теста..."
-            value={searchQuery}
-            onChange={handleSearchChange}
-          />
-        </div>
+        <SearchInput
+          value={searchQuery}
+          onChange={handleSearchChange}
+          placeholder="Поиск по наименованию теста..."
+        />
       </div>
 
       <div className="test-portal__content">
@@ -130,51 +132,14 @@ export function TestPortalPage() {
           />
 
           {totalPages > 1 && (
-            <div className="test-portal__pagination">
-              <div className="pagination-size">
-                <label className="pagination-size__label" htmlFor="items-per-page">
-                  Элементов на странице:
-                </label>
-                <select
-                  id="items-per-page"
-                  className="pagination-size__select"
-                  value={itemsPerPage}
-                  onChange={handleItemsPerPageChange}
-                >
-                  {PAGE_SIZE_OPTIONS.map(option => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              
-              <div className="pagination-controls">
-                <button
-                  className="pagination-btn"
-                  disabled={currentPage === 1}
-                  onClick={() => setCurrentPage(prev => prev - 1)}
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                  </svg>
-                </button>
-                
-                <span className="pagination-info">
-                  Страница {currentPage} из {totalPages}
-                </span>
-                
-                <button
-                  className="pagination-btn"
-                  disabled={currentPage === totalPages}
-                  onClick={() => setCurrentPage(prev => prev + 1)}
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                  </svg>
-                </button>
-              </div>
-            </div>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+              itemsPerPage={itemsPerPage}
+              pageSizeOptions={PAGE_SIZE_OPTIONS}
+              onItemsPerPageChange={handleItemsPerPageChange}
+            />
           )}
         </div>
 
