@@ -4,9 +4,9 @@
 
   &__content {
     flex: 1;
-    margin-left: 260px;
     padding: 1.5rem;
     background-color: #f8fafc;
     min-height: 100vh;
+    transition: margin-left 0.3s ease;
   }
 }
