@@ -1,29 +1,200 @@
+// ============================================
+// Modern 404 Not Found Page Styles
+// ============================================
+
 .not-found-page {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  padding: 2rem;
+  min-height: 100%;
+  padding: var(--space-8);
+  text-align: center;
 
-  h1 {
-    font-size: 6rem;
-    color: #333;
-    margin-bottom: 0.5rem;
+  &__content {
+    max-width: 480px;
   }
 
-  p {
-    font-size: 1.5rem;
-    color: #666;
-    margin-bottom: 2rem;
+  &__illustration {
+    margin-bottom: var(--space-8);
+
+    svg {
+      width: 200px;
+      height: 200px;
+      color: var(--color-gray-200);
+    }
   }
 
-  a {
-    color: #0066cc;
+  &__code {
+    font-size: 8rem;
+    font-weight: var(--font-bold);
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: var(--space-4);
+    letter-spacing: var(--tracking-tighter);
+
+    @media (max-width: 640px) {
+      font-size: 5rem;
+    }
+  }
+
+  &__title {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-bold);
+    color: var(--text-primary);
+    margin: 0 0 var(--space-3) 0;
+    letter-spacing: var(--tracking-tight);
+  }
+
+  &__message {
+    font-size: var(--text-base);
+    color: var(--text-secondary);
+    margin: 0 0 var(--space-8) 0;
+    line-height: var(--leading-relaxed);
+  }
+
+  &__actions {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-5);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    border-radius: var(--radius-lg);
     text-decoration: none;
+    transition: all var(--transition-fast) ease;
+
+    &--primary {
+      background: var(--gradient-primary);
+      color: var(--text-inverse);
+      box-shadow: var(--shadow-primary);
+
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(90, 111, 244, 0.4);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--color-primary-400);
+        outline-offset: 2px;
+      }
+    }
+
+    &--secondary {
+      background: var(--surface-elevated);
+      color: var(--text-primary);
+      border: 1px solid var(--border-primary);
+
+      &:hover {
+        background: var(--color-gray-50);
+        border-color: var(--color-gray-400);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--color-primary-400);
+        outline-offset: 2px;
+      }
+    }
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  &__suggestions {
+    margin-top: var(--space-10);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--border-primary);
+    width: 100%;
+    max-width: 400px;
+  }
+
+  &__suggestions-title {
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--text-secondary);
+    margin: 0 0 var(--space-4) 0;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wider);
+  }
+
+  &__suggestions-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+  }
+
+  &__suggestion-item {
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--border-primary);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__suggestion-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--color-primary-600);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    transition: color var(--transition-fast) ease;
+
+    svg {
+      width: 16px;
+      height: 16px;
+      color: var(--text-tertiary);
+    }
 
     &:hover {
-      text-decoration: underline;
+      color: var(--color-primary-700);
+
+      svg {
+        color: var(--color-primary-500);
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-primary-400);
+      outline-offset: 2px;
+      border-radius: var(--radius-sm);
+    }
+  }
+}
+
+// Responsive styles
+@media (max-width: 640px) {
+  .not-found-page {
+    padding: var(--space-6);
+
+    &__actions {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    &__link {
+      width: 100%;
+      justify-content: center;
+    }
+
+    &__suggestions {
+      margin-top: var(--space-8);
+      padding-top: var(--space-6);
     }
   }
 }

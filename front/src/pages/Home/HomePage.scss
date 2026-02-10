@@ -1,18 +1,132 @@
+// ============================================
+// Modern Home Page Styles
+// ============================================
+
 .home-page {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  padding: 2rem;
+  min-height: 100%;
+  padding: var(--space-8);
+  text-align: center;
 
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
+  &__hero {
+    max-width: 600px;
+    margin-bottom: var(--space-10);
   }
 
-  p {
-    font-size: 1.2rem;
-    color: #666;
+  &__title {
+    font-size: var(--text-4xl);
+    font-weight: var(--font-bold);
+    color: var(--text-primary);
+    margin: 0 0 var(--space-4) 0;
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--leading-tight);
+
+    span {
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  }
+
+  &__subtitle {
+    font-size: var(--text-lg);
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: var(--leading-relaxed);
+  }
+
+  &__actions {
+    display: flex;
+    gap: var(--space-4);
+    margin-bottom: var(--space-12);
+  }
+
+  &__features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+    max-width: 900px;
+    width: 100%;
+  }
+
+  &__feature {
+    background: var(--surface-elevated);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    text-align: center;
+    transition: all var(--transition-fast) ease;
+
+    &:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+      border-color: var(--color-primary-200);
+    }
+  }
+
+  &__feature-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--space-4);
+    box-shadow: var(--shadow-primary);
+
+    svg {
+      width: 24px;
+      height: 24px;
+      color: white;
+    }
+  }
+
+  &__feature-title {
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+    margin: 0 0 var(--space-2) 0;
+  }
+
+  &__feature-description {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: var(--leading-relaxed);
+  }
+}
+
+// Responsive styles
+@media (max-width: 768px) {
+  .home-page {
+    padding: var(--space-6);
+
+    &__title {
+      font-size: var(--text-3xl);
+    }
+
+    &__subtitle {
+      font-size: var(--text-base);
+    }
+
+    &__actions {
+      flex-direction: column;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    &__features {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+
+    &__feature {
+      padding: var(--space-5);
+    }
   }
 }

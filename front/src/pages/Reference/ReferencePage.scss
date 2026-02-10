@@ -1,13 +1,109 @@
+// ============================================
+// Modern Reference Page Styles
+// ============================================
+
 .reference-page {
-  h1 {
-    font-size: 1.75rem;
-    font-weight: 600;
-    color: #1e293b;
-    margin-bottom: 1rem;
+  padding: var(--space-6);
+
+  &__header {
+    margin-bottom: var(--space-8);
   }
 
-  p {
-    color: #64748b;
-    font-size: 1rem;
+  &__title {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-bold);
+    color: var(--text-primary);
+    margin: 0 0 var(--space-2) 0;
+    letter-spacing: var(--tracking-tight);
+  }
+
+  &__description {
+    font-size: var(--text-base);
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: var(--leading-relaxed);
+  }
+
+  &__content {
+    background: var(--surface-elevated);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-sm);
+  }
+
+  &__section {
+    margin-bottom: var(--space-8);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__section-title {
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+    margin: 0 0 var(--space-4) 0;
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--border-primary);
+  }
+
+  &__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__list-item {
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--border-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__list-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--color-primary-500);
+    flex-shrink: 0;
+  }
+
+  &__link {
+    color: var(--color-primary-600);
+    text-decoration: none;
+    font-weight: var(--font-medium);
+    transition: color var(--transition-fast) ease;
+
+    &:hover {
+      color: var(--color-primary-700);
+      text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-primary-400);
+      outline-offset: 2px;
+      border-radius: var(--radius-sm);
+    }
+  }
+}
+
+// Responsive styles
+@media (max-width: 768px) {
+  .reference-page {
+    padding: var(--space-4);
+
+    &__title {
+      font-size: var(--text-xl);
+    }
+
+    &__content {
+      padding: var(--space-4);
+    }
   }
 }
