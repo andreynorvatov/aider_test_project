@@ -17,7 +17,8 @@ const menuItems = [
   {
     section: 'Справочная информация',
     items: [
-      { label: 'Справочная информация', path: '/reference' }
+      { label: 'Справочная информация', path: '/reference' },
+      { label: 'Тестовая страница', path: '/reference/test' }
     ]
   }
 ];

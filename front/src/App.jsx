@@ -5,6 +5,7 @@ import NotFoundPage from './pages/NotFound/NotFoundPage';
 import { TestPortalPage } from './pages/TestPortal/TestPortalPage';
 import UtilitiesPage from './pages/Utilities/UtilitiesPage';
 import ReferencePage from './pages/Reference/ReferencePage';
+import { TestPage } from './pages/Reference/TestPage/TestPage';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="tests" element={<TestPortalPage />} />
         <Route path="utilities" element={<UtilitiesPage />} />
         <Route path="reference" element={<ReferencePage />} />
+        <Route path="reference/test" element={<TestPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
