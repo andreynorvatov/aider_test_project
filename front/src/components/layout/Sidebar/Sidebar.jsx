@@ -38,7 +38,8 @@ export function Sidebar() {
                 <li key={itemIndex} className="sidebar__item">
                   <NavLink
                     to={item.path}
-                    className={({ isActive }) => 
+                    end={item.path === '/reference'}
+                    className={({ isActive }) =>
                       `sidebar__link ${isActive ? 'sidebar__link--active' : ''}`
                     }
                   >
