@@ -1,0 +1,89 @@
+// ============================================
+// Form Field Component Styles
+// ============================================
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+
+  &__label {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--text-secondary);
+  }
+
+  &__input,
+  &__select,
+  &__textarea {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-sm);
+    font-family: var(--font-sans);
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+
+    &::placeholder {
+      color: var(--text-placeholder);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(90, 111, 244, 0.1);
+    }
+
+    &:hover:not(:focus):not(:disabled) {
+      border-color: var(--color-primary-400);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background-color: var(--bg-tertiary);
+    }
+  }
+
+  &__select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--space-3) center;
+    padding-right: var(--space-8);
+  }
+
+  &__textarea {
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.5;
+  }
+}
+
+// Inline variant (label and input on same line)
+.form-field--inline {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-3);
+
+  .form-field__label {
+    flex-shrink: 0;
+    min-width: 120px;
+  }
+
+  .form-field__input,
+  .form-field__select {
+    flex: 1;
+  }
+}
+
+// Compact variant (for tables and dense layouts)
+.form-field--compact {
+  .form-field__input,
+  .form-field__select {
+    padding: var(--space-1) var(--space-2);
+    font-size: var(--text-xs);
+  }
+}

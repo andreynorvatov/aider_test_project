@@ -1,0 +1,74 @@
+// ============================================
+// Status Badge Component Styles
+// ============================================
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-xxs);
+  font-weight: var(--font-semibold);
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-tight);
+
+  &::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-full);
+    background-color: currentColor;
+  }
+
+  &--draft {
+    background-color: var(--color-gray-100);
+    color: var(--color-gray-600);
+  }
+
+  &--planned {
+    background-color: var(--color-info-light);
+    color: var(--color-info);
+  }
+
+  &--in-progress {
+    background-color: var(--color-warning-light);
+    color: var(--color-warning);
+
+    &::before {
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+  }
+
+  &--success {
+    background-color: var(--color-success-light);
+    color: var(--color-success);
+  }
+
+  &--error {
+    background-color: var(--color-error-light);
+    color: var(--color-danger);
+  }
+
+  &--canceled {
+    background-color: var(--color-gray-100);
+    color: var(--color-gray-500);
+  }
+
+  &--default {
+    background-color: var(--color-gray-100);
+    color: var(--color-gray-600);
+  }
+}
+
+@keyframes pulse-dot {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2);
+  }
+}
