@@ -58,6 +58,40 @@
     }
   }
   
+  &__header-actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+  }
+  
+  &__expand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: $border-radius;
+    cursor: pointer;
+    transition: $transition-fast;
+    
+    svg {
+      width: 18px;
+      height: 18px;
+      color: $color-gray-500;
+    }
+    
+    &:hover {
+      background-color: $color-gray-200;
+      
+      svg {
+        color: $color-primary;
+      }
+    }
+  }
+  
   &__content {
     flex: 1;
     overflow-y: auto;

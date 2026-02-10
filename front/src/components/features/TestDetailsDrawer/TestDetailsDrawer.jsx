@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './TestDetailsDrawer.scss';
 
 /**
@@ -63,6 +64,7 @@ const STATUS_OPTIONS = [
 ];
 
 export function TestDetailsDrawer({ test, onClose, onSave }) {
+  const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState(null);
 
@@ -150,18 +152,38 @@ export function TestDetailsDrawer({ test, onClose, onSave }) {
     setIsEditing(false);
   };
 
+  // Открыть на всю страницу
+  const handleExpandClick = () => {
+    navigate(`/tests/${test.id}`);
+  };
+
   return (
     <div className="test-drawer">
       <div className="test-drawer__header">
         <h2 className="test-drawer__title">
           {isEditing ? 'Редактирование теста' : `Детали теста #${test.id}`}
         </h2>
-        <button className="test-drawer__close" onClick={onClose} aria-label="Закрыть">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
+        <div className="test-drawer__header-actions">
+          <button 
+            className="test-drawer__expand" 
+            onClick={handleExpandClick} 
+            aria-label="Развернуть на всю страницу"
+            title="Открыть на всю страницу"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <polyline points="9 21 3 21 3 15"></polyline>
+              <line x1="21" y1="3" x2="14" y2="10"></line>
+              <line x1="3" y1="21" x2="10" y2="14"></line>
+            </svg>
+          </button>
+          <button className="test-drawer__close" onClick={onClose} aria-label="Закрыть">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
       </div>
 
       <div className="test-drawer__content">
