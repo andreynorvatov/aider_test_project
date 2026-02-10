@@ -14,8 +14,19 @@
   left: 0;
   top: 0;
   z-index: var(--z-fixed);
-  transition: width var(--transition-slow) cubic-bezier(0.4, 0, 0.2, 1);
+  transition: width var(--transition-slow) cubic-bezier(0.4, 0, 0.2, 1),
+              background var(--transition-base) ease;
   box-shadow: var(--shadow-xl);
+
+  // Светлая тема - более светлый sidebar
+  [data-theme="light"] & {
+    background: linear-gradient(180deg, var(--color-secondary-800) 0%, var(--color-secondary-900) 100%);
+  }
+
+  // Темная тема - оставляем темный
+  [data-theme="dark"] & {
+    background: var(--gradient-dark);
+  }
 
   // Glass effect overlay
   &::before {
@@ -251,6 +262,18 @@
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     position: relative;
     z-index: 1;
+    display: flex;
+    justify-content: center;
+    
+    // Стили для ThemeToggle в sidebar
+    .theme-toggle--icon {
+      color: var(--color-gray-400);
+      
+      &:hover {
+        color: var(--color-white);
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+    }
   }
 
   &__user {

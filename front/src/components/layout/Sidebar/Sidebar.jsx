@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
+import { ThemeToggle } from '../../common/ThemeToggle/ThemeToggle';
 import './Sidebar.scss';
 
 const menuItems = [
@@ -123,6 +124,9 @@ export function Sidebar({ onCollapseChange }) {
           </div>
         ))}
       </nav>
+      <div className="sidebar__footer">
+        <ThemeToggle />
+      </div>
     </aside>
   );
 }

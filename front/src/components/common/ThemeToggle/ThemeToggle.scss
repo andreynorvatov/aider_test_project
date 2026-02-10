@@ -1,0 +1,159 @@
+// ============================================
+// Theme Toggle Component Styles
+// ============================================
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  
+  // Вариант с иконкой (кнопка)
+  &--icon {
+    padding: var(--space-2);
+    border: none;
+    background-color: transparent;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: all var(--transition-fast);
+    
+    &:hover {
+      background-color: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+    
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--border-focus);
+    }
+    
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+  
+  // Вариант с переключателем
+  &--switch {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  &__label {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--text-secondary);
+  }
+  
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+  
+  // Переключатель (switch)
+  &__switch {
+    position: relative;
+    width: 56px;
+    height: 28px;
+    
+    input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      
+      &:checked + .theme-toggle__slider {
+        background-color: var(--color-primary-600);
+        
+        &::before {
+          transform: translateX(28px);
+        }
+        
+        .theme-toggle__slider-icon--sun {
+          opacity: 0;
+        }
+        
+        .theme-toggle__slider-icon--moon {
+          opacity: 1;
+        }
+      }
+      
+      &:focus + .theme-toggle__slider {
+        box-shadow: 0 0 0 2px var(--border-focus);
+      }
+    }
+  }
+  
+  &__slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-secondary-300);
+    transition: all var(--transition-base);
+    border-radius: var(--radius-full);
+    
+    &::before {
+      content: '';
+      position: absolute;
+      height: 22px;
+      width: 22px;
+      left: 3px;
+      bottom: 3px;
+      background-color: var(--color-white);
+      transition: transform var(--transition-base);
+      border-radius: var(--radius-full);
+      box-shadow: var(--shadow-sm);
+    }
+  }
+  
+  &__slider-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    transition: opacity var(--transition-fast);
+    
+    &--sun {
+      left: 8px;
+      opacity: 1;
+    }
+    
+    &--moon {
+      right: 8px;
+      opacity: 0;
+    }
+  }
+}
+
+// Анимация вращения для иконки солнца
+[data-theme="light"] .theme-toggle__icon svg {
+  animation: rotateIn 0.3s ease-out;
+}
+
+// Анимация появления для иконки луны
+[data-theme="dark"] .theme-toggle__icon svg {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes rotateIn {
+  from {
+    transform: rotate(-90deg);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(0);
+    opacity: 1;
+  }
+}
