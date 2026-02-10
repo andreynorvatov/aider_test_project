@@ -1,0 +1,9 @@
+# API Services
+
+This directory contains API endpoint definitions and the HTTP client.
+
+## Files
+- `client.js` - Configured axios/fetch instance
+- `auth.js` - Authentication API calls
+- `users.js` - User-related API calls
+- `index.js` - Export all API services

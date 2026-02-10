@@ -1,0 +1,8 @@
+# Store Slices
+
+This directory contains Redux slices or Zustand stores for each feature.
+
+## Naming Convention
+- `authSlice.js` - Authentication state
+- `userSlice.js` - User data
+- `uiSlice.js` - UI state (modals, theme, etc.)

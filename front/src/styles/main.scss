@@ -1,0 +1,11 @@
+@use './base/reset';
+@use './base/typography';
+
+// Main stylesheet entry point
+// Utils (variables, mixins, functions)
+// Base styles (reset, typography)
+
+// Global app styles
+.app {
+  min-height: 100vh;
+}

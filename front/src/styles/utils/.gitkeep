@@ -1,0 +1,7 @@
+# Style Utilities
+
+This directory contains SCSS utilities:
+- `_variables.scss` - Color palette, spacing, typography variables
+- `_mixins.scss` - Reusable SCSS mixins
+- `_functions.scss` - SCSS functions
+- `_breakpoints.scss` - Media query breakpoints

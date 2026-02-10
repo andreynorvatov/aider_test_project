@@ -1,0 +1,200 @@
+@use 'sass:color';
+@use '../../../styles/utils/variables' as *;
+
+.tests-table-container {
+  background-color: $color-white;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow;
+  overflow: hidden;
+}
+
+.tests-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  
+  &__head {
+    background-color: $color-gray-50;
+    border-bottom: 2px solid $color-gray-200;
+  }
+  
+  &__th {
+    padding: $spacing-md;
+    text-align: left;
+    font-weight: $font-weight-bold;
+    font-size: 0.875rem;
+    color: $color-gray-700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    
+    &--id {
+      width: 80px;
+    }
+    
+    &--name {
+      width: auto;
+      min-width: 200px;
+    }
+    
+    &--status {
+      width: 180px;
+    }
+    
+    &--time {
+      width: 160px;
+    }
+  }
+  
+  &__body {
+    background-color: $color-white;
+  }
+  
+  &__row {
+    cursor: pointer;
+    transition: $transition-fast;
+    border-bottom: 1px solid $color-gray-200;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+    
+    &:hover {
+      background-color: rgba($color-primary, 0.05);
+    }
+    
+    &--selected {
+      background-color: rgba($color-primary, 0.1);
+      
+      &:hover {
+        background-color: rgba($color-primary, 0.12);
+      }
+    }
+  }
+  
+  &__td {
+    padding: $spacing-md;
+    font-size: $font-size-base;
+    color: $color-gray-800;
+    
+    &--id {
+      font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+      font-weight: 600;
+      color: $color-gray-600;
+    }
+    
+    &--name {
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    &--time {
+      font-size: 0.875rem;
+      color: $color-gray-600;
+      white-space: nowrap;
+    }
+  }
+  
+  &__empty-row {
+    cursor: default;
+    
+    &:hover {
+      background-color: transparent;
+    }
+  }
+  
+  &__empty-cell {
+    padding: $spacing-xl * 2;
+    text-align: center;
+    color: $color-gray-500;
+    font-size: 1rem;
+  }
+}
+
+// Статус-бейджи
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: $spacing-xs $spacing-sm;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: $border-radius-sm;
+  white-space: nowrap;
+  
+  &--draft {
+    background-color: $color-gray-200;
+    color: $color-gray-700;
+  }
+  
+  &--planned {
+    background-color: rgba($color-info, 0.15);
+    color: color.adjust($color-info, $lightness: -10%);
+  }
+  
+  &--in-progress {
+    background-color: rgba($color-primary, 0.15);
+    color: $color-primary;
+    animation: pulse 2s infinite;
+  }
+  
+  &--success {
+    background-color: rgba($color-success, 0.15);
+    color: color.adjust($color-success, $lightness: -10%);
+  }
+  
+  &--error {
+    background-color: rgba($color-danger, 0.15);
+    color: $color-danger;
+  }
+  
+  &--canceled {
+    background-color: rgba($color-secondary, 0.15);
+    color: $color-secondary;
+  }
+  
+  &--default {
+    background-color: $color-gray-200;
+    color: $color-gray-700;
+  }
+}
+
+// Анимация пульсации для статуса "В процессе"
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+// Адаптивность
+@media (max-width: $breakpoint-lg) {
+  .tests-table {
+    &__th,
+    &__td {
+      padding: $spacing-sm;
+    }
+    
+    &__th--time,
+    &__td--time {
+      width: 140px;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .tests-table-container {
+    overflow-x: auto;
+  }
+  
+  .tests-table {
+    min-width: 700px;
+    
+    &__th,
+    &__td {
+      padding: $spacing-sm $spacing-xs;
+    }
+  }
+}

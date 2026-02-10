@@ -1,0 +1,17 @@
+# Tests Directory
+
+This directory contains test files organized by type.
+
+## Structure
+```
+__tests__/
+├── unit/           # Unit tests
+├── integration/    # Integration tests
+├── e2e/            # End-to-end tests
+└── __mocks__/      # Mock files
+```
+
+## Guidelines
+- Mirror the src directory structure
+- Use .test.js or .spec.js suffix
+- Co-locate tests when preferred

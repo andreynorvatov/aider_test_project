@@ -1,0 +1,15 @@
+# Images Directory
+
+This directory contains image assets for the project.
+
+## Structure
+- `icons/` - SVG icons and small UI icons
+- `logo/` - Logo variations
+- `backgrounds/` - Background images
+- `content/` - Content images
+
+## Supported Formats
+- SVG (preferred for icons and logos)
+- PNG (for complex images with transparency)
+- JPG (for photos)
+- WebP (for optimized web images)

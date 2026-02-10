@@ -1,0 +1,7 @@
+# Base Styles
+
+This directory contains foundational styles:
+- CSS reset/normalize
+- CSS variables
+- Typography
+- Base element styles

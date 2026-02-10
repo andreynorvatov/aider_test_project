@@ -1,0 +1,230 @@
+@use 'sass:color';
+@use '../../styles/utils/variables' as *;
+
+.test-portal {
+  min-height: 100vh;
+  background-color: $color-gray-100;
+  padding: $spacing-xl;
+  
+  &__header {
+    margin-bottom: $spacing-xl;
+  }
+  
+  &__title {
+    font-size: 2rem;
+    font-weight: $font-weight-bold;
+    color: $color-gray-900;
+    margin: 0 0 $spacing-sm 0;
+  }
+  
+  &__description {
+    font-size: 1.125rem;
+    color: $color-gray-600;
+    margin: 0;
+  }
+  
+  &__toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: $spacing-lg;
+    margin-bottom: $spacing-lg;
+    flex-wrap: wrap;
+  }
+  
+  &__actions {
+    display: flex;
+    gap: $spacing-md;
+  }
+  
+  &__search {
+    position: relative;
+    flex: 1;
+    max-width: 400px;
+  }
+  
+  &__search-icon {
+    position: absolute;
+    left: $spacing-md;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    color: $color-gray-500;
+    pointer-events: none;
+  }
+  
+  &__search-input {
+    width: 100%;
+    padding: $spacing-sm $spacing-md $spacing-sm 44px;
+    font-size: $font-size-base;
+    border: 1px solid $color-gray-300;
+    border-radius: $border-radius;
+    background-color: $color-white;
+    transition: $transition-fast;
+    
+    &:focus {
+      outline: none;
+      border-color: $color-primary;
+      box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
+    }
+    
+    &::placeholder {
+      color: $color-gray-500;
+    }
+  }
+  
+  &__content {
+    display: flex;
+    position: relative;
+  }
+  
+  &__table-container {
+    flex: 1;
+    transition: margin-right $transition-base;
+    
+    &--with-drawer {
+      margin-right: 0;
+    }
+  }
+  
+  &__pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $spacing-md;
+    margin-top: $spacing-lg;
+    padding: $spacing-md;
+    background-color: $color-white;
+    border-radius: $border-radius;
+    box-shadow: $shadow-sm;
+  }
+  
+  &__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba($color-black, 0.5);
+    z-index: $zindex-modal-backdrop;
+    animation: fadeIn 0.2s ease-out;
+  }
+}
+
+// Кнопки
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-sm $spacing-md;
+  font-size: $font-size-base;
+  font-weight: 500;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: $transition-fast;
+  
+  &__icon {
+    width: 18px;
+    height: 18px;
+  }
+  
+  &--primary {
+    background-color: $color-primary;
+    color: $color-white;
+    
+    &:hover {
+      background-color: color.adjust($color-primary, $lightness: -10%);
+    }
+    
+    &:active {
+      background-color: color.adjust($color-primary, $lightness: -15%);
+    }
+  }
+  
+  &--secondary {
+    background-color: $color-white;
+    color: $color-gray-700;
+    border: 1px solid $color-gray-300;
+    
+    &:hover {
+      background-color: $color-gray-100;
+      border-color: $color-gray-400;
+    }
+    
+    &:active {
+      background-color: $color-gray-200;
+    }
+  }
+}
+
+// Пагинация
+.pagination-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background-color: $color-white;
+  border: 1px solid $color-gray-300;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: $transition-fast;
+  
+  svg {
+    width: 18px;
+    height: 18px;
+    color: $color-gray-600;
+  }
+  
+  &:hover:not(:disabled) {
+    background-color: $color-gray-100;
+    border-color: $color-primary;
+    
+    svg {
+      color: $color-primary;
+    }
+  }
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.pagination-info {
+  font-size: 0.875rem;
+  color: $color-gray-600;
+}
+
+// Анимации
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// Адаптивность
+@media (max-width: $breakpoint-md) {
+  .test-portal {
+    padding: $spacing-md;
+    
+    &__toolbar {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    
+    &__actions {
+      flex-wrap: wrap;
+    }
+    
+    &__search {
+      max-width: none;
+    }
+  }
+}

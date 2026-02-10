@@ -1,0 +1,241 @@
+@use 'sass:color';
+@use '../../../styles/utils/variables' as *;
+
+.test-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 420px;
+  height: 100vh;
+  background-color: $color-white;
+  box-shadow: $shadow-lg;
+  z-index: $zindex-modal;
+  display: flex;
+  flex-direction: column;
+  animation: slideIn 0.3s ease-out;
+  
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-lg;
+    border-bottom: 1px solid $color-gray-200;
+    background-color: $color-gray-50;
+  }
+  
+  &__title {
+    font-size: 1.25rem;
+    font-weight: $font-weight-bold;
+    color: $color-gray-900;
+    margin: 0;
+  }
+  
+  &__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: $border-radius;
+    cursor: pointer;
+    transition: $transition-fast;
+    
+    svg {
+      width: 20px;
+      height: 20px;
+      color: $color-gray-500;
+    }
+    
+    &:hover {
+      background-color: $color-gray-200;
+      
+      svg {
+        color: $color-gray-700;
+      }
+    }
+  }
+  
+  &__content {
+    flex: 1;
+    overflow-y: auto;
+    padding: $spacing-lg;
+  }
+  
+  &__section {
+    margin-bottom: $spacing-lg;
+    padding-bottom: $spacing-lg;
+    border-bottom: 1px solid $color-gray-200;
+    
+    &:last-of-type {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+  }
+  
+  &__section-title {
+    font-size: 0.875rem;
+    font-weight: $font-weight-bold;
+    color: $color-gray-500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 $spacing-md 0;
+  }
+  
+  &__field {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: $spacing-sm;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  &__label {
+    flex-shrink: 0;
+    width: 140px;
+    font-size: 0.875rem;
+    color: $color-gray-600;
+    padding-right: $spacing-sm;
+  }
+  
+  &__value {
+    flex: 1;
+    font-size: 0.875rem;
+    color: $color-gray-900;
+    word-break: break-word;
+    
+    &--name {
+      font-weight: 500;
+      font-size: 1rem;
+    }
+  }
+  
+  &__params {
+    background-color: $color-gray-50;
+    border-radius: $border-radius;
+    padding: $spacing-md;
+  }
+  
+  &__param {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-sm 0;
+    border-bottom: 1px solid $color-gray-200;
+    
+    &:first-child {
+      padding-top: 0;
+    }
+    
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+  }
+  
+  &__param-label {
+    font-size: 0.875rem;
+    color: $color-gray-600;
+  }
+  
+  &__param-value {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $color-gray-900;
+  }
+  
+  &__description {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: $color-gray-700;
+    background-color: $color-gray-50;
+    padding: $spacing-md;
+    border-radius: $border-radius;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  
+  &__footer {
+    padding: $spacing-lg;
+    border-top: 1px solid $color-gray-200;
+    background-color: $color-gray-50;
+  }
+  
+  &__close-btn {
+    width: 100%;
+  }
+}
+
+// Анимация появления
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+// Адаптивность
+@media (max-width: $breakpoint-md) {
+  .test-drawer {
+    width: 100%;
+    max-width: 100%;
+    
+    &__label {
+      width: 120px;
+    }
+  }
+}
+
+// Статус-бейджи (дублируем из таблицы для независимости компонента)
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: $spacing-xs $spacing-sm;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: $border-radius-sm;
+  white-space: nowrap;
+  
+  &--draft {
+    background-color: $color-gray-200;
+    color: $color-gray-700;
+  }
+  
+  &--planned {
+    background-color: rgba($color-info, 0.15);
+    color: color.adjust($color-info, $lightness: -10%);
+  }
+  
+  &--in-progress {
+    background-color: rgba($color-primary, 0.15);
+    color: $color-primary;
+  }
+  
+  &--success {
+    background-color: rgba($color-success, 0.15);
+    color: color.adjust($color-success, $lightness: -10%);
+  }
+  
+  &--error {
+    background-color: rgba($color-danger, 0.15);
+    color: $color-danger;
+  }
+  
+  &--canceled {
+    background-color: rgba($color-secondary, 0.15);
+    color: $color-secondary;
+  }
+  
+  &--default {
+    background-color: $color-gray-200;
+    color: $color-gray-700;
+  }
+}
